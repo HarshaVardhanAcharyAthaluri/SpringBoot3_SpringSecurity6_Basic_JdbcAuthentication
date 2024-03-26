@@ -20,30 +20,18 @@ import com.training.springboot3springsecurity.UserService;
 public class SecurityConfig {
 	@Autowired
 	UserRepository repo;
-	
-	@Autowired
-	DataSource datasource;
-	
-	
-	
+
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers("/", "/home", "/save").permitAll()
-                                .anyRequest().authenticated()
-                )
-                .formLogin((form) -> form
-                                //.loginPage("/login")
-                                .permitAll()
-                )
-                .logout((logout) -> logout.permitAll())
-                .csrf(csrf -> csrf.disable());
-
+		http.authorizeHttpRequests(
+				(requests) -> requests.requestMatchers("/", "/home", "/save").permitAll()
+				.requestMatchers("/greet").hasAnyRole("admin")
+				.anyRequest().authenticated())
+				.formLogin((form) -> form.loginPage("/login")
+						.permitAll())
+				.logout((logout) -> logout.permitAll())
+				.csrf(csrf -> csrf.disable());
 		return http.build();
 	}
-	
-	
 
-	
 }

@@ -14,6 +14,7 @@ public class WebConfig implements WebMvcConfigurer{
 		reg.addViewController("/home").setViewName("home");
 		reg.addViewController("/").setViewName("home");
 		reg.addViewController("/greet").setViewName("greet");
+		reg.addViewController("/login").setViewName("login");
 		
 	}
 	
